@@ -28,6 +28,7 @@ const postResolver =  async (parent)=>{
     return await Post.find({user:parent._id})
 }
 
+
 const addPostResolver = async (_, args) => {
     try {
         const { content, userId } = args;

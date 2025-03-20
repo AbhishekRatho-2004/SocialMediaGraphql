@@ -17,6 +17,7 @@ const typeDefs = gql`
         content: String!
         user: User!
         image: String
+        likes: [User]
         comment: [User]!
     }
 
@@ -34,6 +35,7 @@ const typeDefs = gql`
         addPost(userId:ID!,content:String!): Post
         followUser(currentUserId:ID!,targetUserId:ID!):String
         unfollowUser(currentUserId:ID!,targetUserId:ID!):String
+        likePost(postId:ID!,userId:ID!):String
     }
 `;
 

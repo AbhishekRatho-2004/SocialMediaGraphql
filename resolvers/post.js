@@ -1,4 +1,5 @@
 const Post = require("../models/Post")
+const User = require("../models/User")
 
 const getPostsResolver = async (_,args)=>{
     try {
@@ -29,6 +30,7 @@ const postResolver =  async (parent)=>{
 }
 
 
+
 const addPostResolver = async (_, args) => {
     try {
         const { content, userId } = args;
@@ -44,10 +46,47 @@ const addPostResolver = async (_, args) => {
     }
 }
 
+const likePostResolver= async (_,args)=>{
+    try {
+        const {postId,userId} = args
+        if(postId===userId){
+            return "Both the ids are same"
+        }
+        if(!postId || !userId){
+            return "All the fields are manadatory"
+        }
+        const post = await Post.findById(postId)
+        const user = await User.findById(userId)
+        if(!post || !user){
+            return "Either post or User doesnot exists"
+        }
+        if(post.likes.includes(userId)){
+            post.likes = post.likes.filter((like) => like !== userId)
+            return "Post Unliked successfully"
+        }
+        post.likes.push(user._id)
+        await post.save()
+        return "Post Liked Successfully"
+
+    } catch (error) {
+        return "Unable to Like "
+    }
+}
+
+const getLikesResolver = async (parent) => {
+    const post = await Post.findById(parent._id).populate("likes","username email followers following _id"); 
+    return post.likes || []; 
+};
+
+
+
+
 module.exports = {
     addPostResolver,
     getPostsResolver,
     getPostByIdResolver,
-    postResolver
+    postResolver,
+    likePostResolver,
+    getLikesResolver
 }
 

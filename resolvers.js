@@ -1,6 +1,6 @@
 const User = require("./models/User");
 const { getUserResolver, getUserByIdResolver, addUserResolver,followUserResolver, getFollowingUsers, getFollowedUser, unfollowUserResolver } = require("./resolvers/user");
-
+const {addPostResolver, getPostsResolver, getPostByIdResolver}= require("./resolvers/post")
 const resolvers = {
     User:{
         followers:getFollowingUsers,
@@ -8,12 +8,16 @@ const resolvers = {
     },
     Query: {
         getUsers: getUserResolver,
-        getUserById: getUserByIdResolver
+        getUserById: getUserByIdResolver,
+        getPosts:getPostsResolver,
+        getPostByID:getPostByIdResolver
     },
     Mutation: {
         addUser: addUserResolver,
         followUser:followUserResolver,
-        unfollowUser:unfollowUserResolver
+        unfollowUser:unfollowUserResolver,
+        addPost: addPostResolver
+        
     },
 };
 module.exports = resolvers;

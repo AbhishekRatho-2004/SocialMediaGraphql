@@ -1,10 +1,11 @@
 const User = require("./models/User");
 const { getUserResolver, getUserByIdResolver, addUserResolver,followUserResolver, getFollowingUsers, getFollowedUser, unfollowUserResolver } = require("./resolvers/user");
-const {addPostResolver, getPostsResolver, getPostByIdResolver}= require("./resolvers/post")
+const {addPostResolver, getPostsResolver, getPostByIdResolver, postResolver}= require("./resolvers/post")
 const resolvers = {
     User:{
         followers:getFollowingUsers,
-        following:getFollowedUser
+        following:getFollowedUser,
+        posts:postResolver
     },
     Query: {
         getUsers: getUserResolver,

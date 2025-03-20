@@ -10,7 +10,7 @@ const typeDefs = gql`
         bio: String
         followers: [User]
         following: [User]
-        post: [Post]
+        posts:[Post]
     }
     type Post{   
         id: ID!
